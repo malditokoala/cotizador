@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { obetnerDiferenciaYear } from "../helper";
+import { obetnerDiferenciaYear, calcularMarca } from "../helper";
 
 const Campo = styled.div`
   display: flex;
@@ -62,6 +62,7 @@ const Formulario = () => {
 
   // Leer los datos del formualrio y colocarlos en el state
   const obtenerInformacion = (e) => {
+    console.log(e.target.name, e.target.value);
     guardarDatos({
       ...datos,
       [e.target.name]: e.target.value,
@@ -89,11 +90,12 @@ const Formulario = () => {
     // Por cada año hay que restart el 3%
     resultado -= (diferencia * 3 * resultado) / 100;
 
-    console.log(resultado);
     // Americano 15%)
     // Asiatico 5%
     // Europeo 30%
 
+    resultado = calcularMarca(marca) * resultado;
+    console.log(resultado);
     // Basico aumenta 20%
     // Completo 50%
 
@@ -106,9 +108,9 @@ const Formulario = () => {
         <Label>Marca</Label>
         <Select name="marca" value={marca} onChange={obtenerInformacion}>
           <option value="">--Seleccione--</option>
-          <option value-="americano">Americano</option>
-          <option value-="europeo">Europeo</option>
-          <option value-="asiatico">Asiatico</option>
+          <option value="americano">Americano</option>
+          <option value="europeo">Europeo</option>
+          <option value="asiatico">Asiatico</option>
         </Select>
       </Campo>
       <Campo>
