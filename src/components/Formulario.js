@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import { obetnerDiferenciaYear, calcularMarca } from "../helper";
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { obetnerDiferenciaYear, calcularMarca, obtenerPlan } from '../helper';
 
 const Campo = styled.div`
   display: flex;
@@ -52,9 +52,9 @@ const Error = styled.div`
 `;
 const Formulario = () => {
   const [datos, guardarDatos] = useState({
-    marca: "",
-    year: "",
-    plan: "basico",
+    marca: '',
+    year: '',
+    plan: 'basico',
   });
   const [error, guadarError] = useState(false);
   // Exterar los valores del state.
@@ -75,7 +75,7 @@ const Formulario = () => {
     e.preventDefault();
     console.time();
     console.log(marca, year, plan);
-    if (marca.trim() === "" || year.trim() === "" || plan.trim() === "") {
+    if (marca.trim() === '' || year.trim() === '' || plan.trim() === '') {
       guadarError(true);
       return;
     }
@@ -95,10 +95,11 @@ const Formulario = () => {
     // Europeo 30%
 
     resultado = calcularMarca(marca) * resultado;
-    console.log(resultado);
+
     // Basico aumenta 20%
     // Completo 50%
-
+    const incrementoPlan = obtenerPlan(plan);
+    console.log(incrementoPlan);
     // Total
   };
   return (
@@ -106,49 +107,49 @@ const Formulario = () => {
       {error ? <Error>Todos los campos son obligatorios</Error> : null}
       <Campo>
         <Label>Marca</Label>
-        <Select name="marca" value={marca} onChange={obtenerInformacion}>
-          <option value="">--Seleccione--</option>
-          <option value="americano">Americano</option>
-          <option value="europeo">Europeo</option>
-          <option value="asiatico">Asiatico</option>
+        <Select name='marca' value={marca} onChange={obtenerInformacion}>
+          <option value=''>--Seleccione--</option>
+          <option value='americano'>Americano</option>
+          <option value='europeo'>Europeo</option>
+          <option value='asiatico'>Asiatico</option>
         </Select>
       </Campo>
       <Campo>
         <Label>Año</Label>
-        <Select name="year" value={year} onChange={obtenerInformacion}>
-          <option value="">-- Seleccione --</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
-          <option value="2018">2018</option>
-          <option value="2017">2017</option>
-          <option value="2016">2016</option>
-          <option value="2015">2015</option>
-          <option value="2014">2014</option>
-          <option value="2013">2013</option>
-          <option value="2012">2012</option>
+        <Select name='year' value={year} onChange={obtenerInformacion}>
+          <option value=''>-- Seleccione --</option>
+          <option value='2021'>2021</option>
+          <option value='2020'>2020</option>
+          <option value='2019'>2019</option>
+          <option value='2018'>2018</option>
+          <option value='2017'>2017</option>
+          <option value='2016'>2016</option>
+          <option value='2015'>2015</option>
+          <option value='2014'>2014</option>
+          <option value='2013'>2013</option>
+          <option value='2012'>2012</option>
         </Select>
       </Campo>
       <Campo>
         <Label>Plan</Label>
         <InputRadio
-          type="radio"
-          name="plan"
-          value="basico"
-          checked={plan === "basico"}
+          type='radio'
+          name='plan'
+          value='basico'
+          checked={plan === 'basico'}
           onChange={obtenerInformacion}
         />
         Basico
         <InputRadio
-          type="radio"
-          name="plan"
-          value="completo"
-          checked={plan === "completo"}
+          type='radio'
+          name='plan'
+          value='completo'
+          checked={plan === 'completo'}
           onChange={obtenerInformacion}
         />
         Completo
       </Campo>
-      <Boton type="submit">Cotizar</Boton>
+      <Boton type='submit'>Cotizar</Boton>
     </form>
   );
 };
